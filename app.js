@@ -34,6 +34,13 @@ const app = http.createServer((req, res) => {
     const status = req.url.split("/")[2]
     res.writeHead(status, { "Content-Type": "application/json" })
     res.end(JSON.stringify({ status: status }))
+  } else if (req.method === "GET" && req.url.startsWith("/delay/")) {
+    const getDelay = Number(req.url.split("/")[2])
+
+    setTimeout(() => {
+      res.writeHead(200, { "Content-Type": "application/json" })
+      res.end(JSON.stringify({ delay: `The delay was ${getDelay}` }))
+    }, getDelay * 1000)
   }
 })
 
