@@ -30,6 +30,10 @@ const app = http.createServer((req, res) => {
   } else if (req.method === "GET" && req.url === "/uuid") {
     const id = uuid4()
     res.end(JSON.stringify({ uuid: id }))
+  } else if (req.method === "GET" && req.url.startsWith("/status/")) {
+    const status = req.url.split("/")[2]
+    res.writeHead(status, { "Content-Type": "application/json" })
+    res.end(JSON.stringify({ status: status }))
   }
 })
 
