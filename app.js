@@ -6,19 +6,21 @@ import fs from "fs"
 const PORT = 3000
 
 const app = http.createServer((req, res) => {
-  console.log("New request received")
   res.writeHead(200, { "Content-Type": "text/html" })
-  fs.readFile("index.html", (err, data) => {
-    if (err) {
-      res.writeHead(404)
-      res.write("Error: File not found")
-    } else {
-      res.write(data)
-    }
-    res.end()
-  })
+
+  if (req.url === "/" && req.method === "GET") {
+    fs.readFile("index.html", (err, data) => {
+      if (err) {
+        res.writeHead(404)
+        res.write("Error: File not found")
+      } else {
+        res.write(data)
+      }
+      res.end()
+    })
+  }
 })
 
-app.listen(PORT, "127.0.1.2", () => {
+app.listen(PORT, () => {
   console.log(`Listening to port: ${PORT}`)
 })
