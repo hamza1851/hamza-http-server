@@ -18,6 +18,16 @@ const app = http.createServer((req, res) => {
       }
       res.end()
     })
+  } else if (req.method === "GET" && req.url === "/json") {
+    fs.readFile("random.json", (err, data) => {
+      if (err) {
+        res.writeHead(404)
+        res.write("Error: File not found")
+      } else {
+        res.write(data)
+      }
+      res.end()
+    })
   }
 })
 
